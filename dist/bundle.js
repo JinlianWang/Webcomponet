@@ -23537,8 +23537,49 @@ var HelloWorldElement = class extends HTMLElement {
     if (this.reactRoot) this.reactRoot.unmount();
   }
 };
+function Calendar() {
+  const today = /* @__PURE__ */ new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const firstDayOffset = new Date(year, month, 1).getDay();
+  const totalDays = new Date(year, month + 1, 0).getDate();
+  const cells = [];
+  for (let i = 0; i < firstDayOffset; i += 1) cells.push(null);
+  for (let day = 1; day <= totalDays; day += 1) cells.push(day);
+  while (cells.length % 7 !== 0) cells.push(null);
+  const weeks = [];
+  for (let i = 0; i < cells.length; i += 7) {
+    weeks.push(cells.slice(i, i + 7));
+  }
+  const monthLabel = today.toLocaleString("default", { month: "long" });
+  return /* @__PURE__ */ import_react.default.createElement("div", { style: { fontFamily: "sans-serif", maxWidth: "320px" } }, /* @__PURE__ */ import_react.default.createElement("h3", { style: { marginBottom: "0.5rem" } }, monthLabel, " ", year), /* @__PURE__ */ import_react.default.createElement(
+    "table",
+    {
+      style: {
+        width: "100%",
+        borderCollapse: "collapse",
+        textAlign: "center"
+      }
+    },
+    /* @__PURE__ */ import_react.default.createElement("thead", null, /* @__PURE__ */ import_react.default.createElement("tr", null, dayLabels.map((label) => /* @__PURE__ */ import_react.default.createElement("th", { key: label, style: { padding: "0.25rem", fontSize: "0.85rem" } }, label)))),
+    /* @__PURE__ */ import_react.default.createElement("tbody", null, weeks.map((week, index) => /* @__PURE__ */ import_react.default.createElement("tr", { key: `week-${index}` }, week.map((day, dayIndex) => /* @__PURE__ */ import_react.default.createElement(
+      "td",
+      {
+        key: `day-${dayIndex}`,
+        style: {
+          padding: "0.5rem 0",
+          border: "1px solid #dedede",
+          backgroundColor: day === today.getDate() ? "#f0f8ff" : "transparent",
+          color: day ? "inherit" : "#ccc"
+        }
+      },
+      day || ""
+    )))))
+  ));
+}
 function HelloWorld() {
-  return /* @__PURE__ */ import_react.default.createElement("div", { style: { fontFamily: "sans-serif" } }, "Hello from React!");
+  return /* @__PURE__ */ import_react.default.createElement("div", { style: { fontFamily: "sans-serif" } }, /* @__PURE__ */ import_react.default.createElement("p", { style: { marginTop: 0 } }, "Hello from React!"), /* @__PURE__ */ import_react.default.createElement(Calendar, null));
 }
 customElements.define("hello-react", HelloWorldElement);
 /*! Bundled license information:

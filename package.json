@@ -1,0 +1,16 @@
+{
+  "name": "webcomponent",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/helloworld.jsx --bundle --outfile=dist/bundle.js --format=esm && cp src/index.html dist/index.html",
+    "serve": "serve dist"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.0",
+    "serve": "^14.0.0"
+  }
+}
